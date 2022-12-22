@@ -1,5 +1,5 @@
 This is a workshop project to create a chat bot using API provided by [chatgpt](https://openai.com/blog/chatgpt/).
-Any new and fun tech is introduced to make this happen, including but not limited:
+Some new and fun tech is introduced to make this happen, including as bellow. Practice and have fun!
 - NextJs
 - Typescript
 - Rust
@@ -8,7 +8,6 @@ Any new and fun tech is introduced to make this happen, including but not limite
 - ChatGpt
 - Coqui-stt speech to text engine
 
-Practice and have fun!
 ## Workshop Overview
 ![image](./doc/image/workshop.png) 
 
