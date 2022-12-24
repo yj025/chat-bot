@@ -16,7 +16,7 @@ export default async function handler(
         return
     }
 
-    const result = await sendToGPT(req.body.message)
+    const result = await sendToGPT(req.body.message,req.body.conversationId,req.body.parentMessageId)
     console.log(result)
     res.status(200).send({result: result})
 }

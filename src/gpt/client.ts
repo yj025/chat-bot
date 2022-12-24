@@ -5,11 +5,11 @@ const api = new ChatGPTAPIBrowser({
     password: process.env.OPENAI_PASSWORD as string
 })
 
-export const sendToGPT = async (message: string) => {
+export const sendToGPT = async (message: string, conversationId?: string, parentMessageId?: string) => {
     const isAuthenticated = await api.getIsAuthenticated()
-    if (!isAuthenticated){
+    if (!isAuthenticated) {
         await api.initSession()
     }
 
-    return api.sendMessage(message)
+    return api.sendMessage(message, {conversationId, parentMessageId})
 }
