@@ -25,7 +25,7 @@ export const ChatPage: FC = () => {
                 body: JSON.stringify({message: message})
             }).then(response => response.json())
                 .then(result => {
-                    addChat({from: ChatSource.SERVER, message: result.response})
+                    addChat({from: ChatSource.SERVER, message: result.result.response})
                 });
         }
 
