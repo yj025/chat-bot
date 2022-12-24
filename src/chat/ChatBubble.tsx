@@ -8,5 +8,5 @@ interface Props {
 
 export const ChatBubble: FC<Props> = ({chat}) => {
     const bubbleStyle = chat.from === ChatSource.SENDER ? style.bubbleSender : style.bubbleServer
-    return <p className={bubbleStyle}>{chat.content}</p>
+    return <p className={bubbleStyle}>{chat.message}</p>
 }

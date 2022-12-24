@@ -4,7 +4,7 @@ import {ChatSource} from "../Chats";
 
 describe('test Bubble', function () {
     it('should render Bubble', function () {
-        render(<ChatBubble chat={{from: ChatSource.SENDER, content: "biu biu"}}/>)
+        render(<ChatBubble chat={{from: ChatSource.SENDER, message: "biu biu"}}/>)
         expect(screen.getByText("biu biu")).toBeInTheDocument()
     });
 });

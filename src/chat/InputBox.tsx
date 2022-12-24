@@ -2,10 +2,10 @@ import {FC, useRef} from "react";
 import style from "./InputBox.module.css";
 
 interface Props {
-    onComplete: (content: string) => void
+    onSubmit: (content: string) => void
 }
 
-export const InputBox: FC<Props> = ({onComplete}) => {
+export const InputBox: FC<Props> = ({onSubmit}) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     return <div className={style.inputBoxContainer}>
@@ -13,7 +13,7 @@ export const InputBox: FC<Props> = ({onComplete}) => {
         <button onClick={() => {
             const current = inputRef.current
             if (current) {
-                onComplete(current.value)
+                onSubmit(current.value)
                 current.value = ""
             }
         }} className={style.submit}>submit

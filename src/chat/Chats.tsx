@@ -7,7 +7,7 @@ interface Props {
 }
 
 export interface Chat {
-    content: string;
+    message: string;
     from: ChatSource
 }
 
