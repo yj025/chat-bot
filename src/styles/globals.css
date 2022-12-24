@@ -99,3 +99,7 @@ a {
     color-scheme: dark;
   }
 }
+
+#__next {
+  height: 100vh;
+}
