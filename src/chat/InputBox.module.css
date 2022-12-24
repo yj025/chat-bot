@@ -1,0 +1,15 @@
+
+.inputBoxContainer{
+    display: flex;
+    flex: 0;
+}
+
+.input{
+    flex: 1;
+    height: 48px;
+}
+
+.submit{
+    height: 48px;
+    width: 80px;
+}

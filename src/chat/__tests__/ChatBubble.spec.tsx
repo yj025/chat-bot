@@ -1,9 +1,10 @@
 import {render, screen} from "@testing-library/react";
-import {Bubble} from "../Bubble";
+import {ChatBubble} from "../ChatBubble";
+import {ChatSource} from "../Chats";
 
 describe('test Bubble', function () {
     it('should render Bubble', function () {
-        render(<Bubble content={"biu biu"}/>)
+        render(<ChatBubble chat={{from: ChatSource.SENDER, content: "biu biu"}}/>)
         expect(screen.getByText("biu biu")).toBeInTheDocument()
     });
 });

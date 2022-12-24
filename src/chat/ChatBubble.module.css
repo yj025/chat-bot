@@ -1,0 +1,21 @@
+
+.bubbleContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.bubbleServer {
+    background: silver;
+    align-self: start;
+    flex: 0;
+    margin: 6px;
+}
+
+.bubbleSender {
+    background: azure;
+    align-self: end;
+    flex: 0;
+    margin: 6px;
+}
+
