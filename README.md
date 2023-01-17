@@ -26,3 +26,6 @@ OPENAI_PASSWORD={your openAI account pwd}
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Start BE
+push BE code test
