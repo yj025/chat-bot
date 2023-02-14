@@ -1,15 +1,13 @@
-import {ChatGPTAPIBrowser} from 'chatgpt'
+import { ChatGPTAPI } from 'chatgpt'
 
-const api = new ChatGPTAPIBrowser({
-    email: process.env.OPENAI_EMAIL as string,
-    password: process.env.OPENAI_PASSWORD as string
+const api = new ChatGPTAPI({
+  apiKey: process.env.OPENAI_API_KEY || '',
 })
 
-export const sendToGPT = async (message: string, conversationId?: string, parentMessageId?: string) => {
-    const isAuthenticated = await api.getIsAuthenticated()
-    if (!isAuthenticated) {
-        await api.initSession()
-    }
-
-    return api.sendMessage(message, {conversationId, parentMessageId})
+export const sendToGPT = async (
+  message: string,
+  conversationId?: string,
+  parentMessageId?: string
+) => {
+  return api.sendMessage(message, { conversationId, parentMessageId })
 }
