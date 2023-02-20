@@ -44,6 +44,10 @@ export const ChatPage: FC = () => {
             messageId: result.result.messageId,
           })
         })
+        .catch(e=>{
+          console.log(e);
+        
+        })
     }
   }
 
