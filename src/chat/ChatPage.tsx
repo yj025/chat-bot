@@ -16,38 +16,82 @@ export const ChatPage: FC = () => {
   }
   useEffect(() => {
     setChats([
-      { from: ChatSource.SERVER, message: 'hello' },
-      { from: ChatSource.SENDER, message: 'hello there' },
+      { from: ChatSource.SERVER, message: 'hello, pls input your username' },
     ])
   }, [])
+  const [token, setToken] = useState('')
+
+  const sendMessage = (message: string, token: string) => {
+    fetch('/api/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        message: message,
+        conversationId: conversation?.conversationId,
+        parentMessageId: conversation?.messageId,
+      }),
+    })
+      .then((response) => {
+        if (response.status == 401) {
+          setToken('')
+          throw Error('Authentication failed')
+        }
+        return response.json()
+      })
+      .then((result) => {
+        addChat({ from: ChatSource.SERVER, message: result.result.text })
+        setConversation({
+          conversationId: result.result.conversationId,
+          messageId: result.result.messageId,
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const authenticate = (message: string) => {
+    fetch('/api/authenticate', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: message,
+      }),
+    })
+      .then((response) => {
+        if (response.status == 200) {
+          return response.json()
+        } else {
+          throw Error('Authentication failed')
+        }
+      })
+      .then((result) => {
+        setToken(result.result.token)
+        addChat({
+          from: ChatSource.SERVER,
+          message: 'authenticated, pls continue the chat.',
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   const onSubmit = (message: string) => {
     if (message) {
       addChat({ from: ChatSource.SENDER, message })
-      fetch('/api/send', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: message,
-          conversationId: conversation?.conversationId,
-          parentMessageId: conversation?.messageId,
-        }),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          addChat({ from: ChatSource.SERVER, message: result.result.text })
-          setConversation({
-            conversationId: result.result.conversationId,
-            messageId: result.result.messageId,
-          })
-        })
-        .catch(e=>{
-          console.log(e);
-        
-        })
+      if (token) {
+        sendMessage(message, token)
+      } else {
+        authenticate(message)
+      }
     }
   }
 

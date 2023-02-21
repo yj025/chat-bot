@@ -16,18 +16,17 @@ export default async function handler(
     return res.status(405).send({ result: 'Only POST requests allowed' })
   }
 
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  if (token == null) return res.status(401).send({result:"401"});
+  if (token == null) return res.status(401).send({ result: '401' })
 
-  try{
-    const result = jwt.verify(token,process.env.TOKEN_SECRET as string)
-    console.log(result);    
-  } catch(err){
-    console.log(err) 
-    return res.status(401).send({result:"401"}) 
+  try {
+    jwt.verify(token, process.env.TOKEN_SECRET as string)
+  } catch (err) {
+    console.log(err)
+    return res.status(401).send({ result: '401' })
   }
-  
+
   const result = await sendToGPT(
     req.body.message,
     req.body.conversationId,

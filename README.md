@@ -23,6 +23,8 @@ Some new and fun tech is introduced to make this happen, including as bellow. Pr
 
 ```
 OPENAI_API_KEY={your openAI API key}
+TOKEN_SECRET={your jwt secret}
+USER_NAME={your self defined username}
 ```
 
 2. Run dev

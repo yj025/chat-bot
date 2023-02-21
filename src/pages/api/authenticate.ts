@@ -16,12 +16,16 @@ export default async function handler(
     return
   }
 
-  const message = req.body.message;
-  const userName = process.env.USER_NAME;
-    if(message == userName ){
-      const token = jwt.sign({ userName: userName }, process.env.TOKEN_SECRET as string);
-      res.status(200).send({ result: {token:token} })
-    } else {
-      res.status(403).send({ result: "403" }) 
-    }
+  const message = req.body.message
+  const userName = process.env.USER_NAME
+
+  if (message == userName) {
+    const token = jwt.sign(
+      { userName: userName },
+      process.env.TOKEN_SECRET as string
+    )
+    res.status(200).send({ result: { token: token } })
+  } else {
+    res.status(401).send({ result: '403' })
+  }
 }
