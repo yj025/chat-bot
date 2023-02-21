@@ -12,20 +12,18 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method !== 'POST') {
-    res.status(405).send({ result: 'Only POST requests allowed' })
-    return
+    return res.status(405).send({ result: 'Only POST requests allowed' })
   }
 
   const message = req.body.message
-  const userName = process.env.USER_NAME
 
-  if (message == userName) {
+  if (message == process.env.PASSPORT) {
     const token = jwt.sign(
-      { userName: userName },
+      { userName: process.env.USER_NAME },
       process.env.TOKEN_SECRET as string
     )
     res.status(200).send({ result: { token: token } })
   } else {
-    res.status(401).send({ result: '403' })
+    res.status(401).send({ result: '401' })
   }
 }

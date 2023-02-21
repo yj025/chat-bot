@@ -16,7 +16,7 @@ export const ChatPage: FC = () => {
   }
   useEffect(() => {
     setChats([
-      { from: ChatSource.SERVER, message: 'hello, pls input your username' },
+      { from: ChatSource.SERVER, message: 'Hello, pls input the passport' },
     ])
   }, [])
   const [token, setToken] = useState('')
@@ -76,11 +76,15 @@ export const ChatPage: FC = () => {
         setToken(result.result.token)
         addChat({
           from: ChatSource.SERVER,
-          message: 'authenticated, pls continue the chat.',
+          message: 'Success! Chat with me!',
         })
       })
       .catch((err) => {
         console.log(err)
+        addChat({
+          from: ChatSource.SERVER,
+          message: 'Authentication failed, pls input the passport.',
+        })
       })
   }
 
