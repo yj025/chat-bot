@@ -1,14 +1,22 @@
-import { FC, useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
 import style from './InputBox.module.css'
 import { useRecorder } from './useRecorder'
+import { useStt } from '../stt/useSTT'
 
 interface Props {
   onSubmit: (content: string) => void
 }
 
 export const InputBox: FC<Props> = ({ onSubmit }) => {
+  const { init, processAudio } = useStt(onSubmit)
+  useEffect(() => {
+    init()
+  }, [])
+  const onRecordStop = async (audioUrl: string) => {
+    processAudio(audioUrl)
+  }
   const inputRef = useRef<HTMLInputElement>(null)
-  const [recording, startRecord, stopRecord] = useRecorder(onSubmit)
+  const [recording, startRecord, stopRecord] = useRecorder(onRecordStop)
 
   return (
     <div className={style.inputBoxContainer}>

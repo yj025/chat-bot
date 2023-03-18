@@ -9,5 +9,5 @@ export const sendToGPT = async (
   conversationId?: string,
   parentMessageId?: string
 ) => {
-  return api.sendMessage(message, { conversationId, parentMessageId })
+  return api.sendMessage(message, { parentMessageId })
 }

@@ -1,7 +1,14 @@
 import { FC, useEffect, useState } from 'react'
 import { Chat, Chats, ChatSource } from './Chats'
-import { InputBox } from './InputBox'
 import style from './ChatPage.module.css'
+import dynamic from 'next/dynamic'
+
+const DynamicChatInput = dynamic(
+  () => import('./InputBox').then((module) => module.InputBox),
+  {
+    loading: () => <p>Loading...</p>,
+  }
+)
 
 interface Conversation {
   conversationId: string
@@ -102,7 +109,7 @@ export const ChatPage: FC = () => {
   return (
     <div className={style.chatContainer}>
       <Chats chats={chats} />
-      <InputBox onSubmit={onSubmit} />
+      <DynamicChatInput onSubmit={onSubmit} />
     </div>
   )
 }
