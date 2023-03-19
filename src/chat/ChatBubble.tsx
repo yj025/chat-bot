@@ -1,13 +1,20 @@
-import { FC } from 'react'
-import { Chat, ChatSource } from './Chats'
-import style from './ChatBubble.module.css'
+import { FC } from "react";
+import { Chat, ChatSource } from "./Chats";
 
 interface Props {
-  chat: Chat
+  chat: Chat;
 }
 
 export const ChatBubble: FC<Props> = ({ chat }) => {
-  const bubbleStyle =
-    chat.from === ChatSource.SENDER ? style.bubbleSender : style.bubbleServer
-  return <p className={bubbleStyle}>{chat.message}</p>
-}
+  return (
+    <p
+      className={
+        chat.from === ChatSource.SENDER
+          ? "m-1 self-end rounded-md bg-lime-50 p-2"
+          : "m-1 self-start rounded-md bg-orange-100 p-2"
+      }
+    >
+      {chat.message}
+    </p>
+  );
+};

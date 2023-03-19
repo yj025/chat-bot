@@ -1,14 +1,13 @@
-import { FC } from 'react'
-import { ChatBubble } from './ChatBubble'
-import style from './ChatBubble.module.css'
+import { FC, useEffect, useRef } from "react";
+import { ChatBubble } from "./ChatBubble";
 
 interface Props {
-  chats: Chat[]
+  chats: Chat[];
 }
 
 export interface Chat {
-  message: string
-  from: ChatSource
+  message: string;
+  from: ChatSource;
 }
 
 export enum ChatSource {
@@ -17,11 +16,22 @@ export enum ChatSource {
 }
 
 export const Chats: FC<Props> = ({ chats }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (scrollRef?.current) {
+      scrollRef.current.scrollTop = scrollRef.current?.scrollHeight;
+    }
+  }, [chats.length]);
   return (
-    <div className={style.bubbleContainer}>
-      {chats.map((chat, index) => (
-        <ChatBubble key={index} chat={chat} />
-      ))}
+    <div className="flex-grow overflow-hidden">
+      <div
+        ref={scrollRef}
+        className="flex max-h-full flex-col overflow-auto  whitespace-pre-wrap text-lg"
+      >
+        {chats.map((chat, index) => (
+          <ChatBubble key={index} chat={chat} />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
