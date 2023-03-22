@@ -1,21 +1,36 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useRecorder } from "./useRecorder";
 import { useStt } from "../stt/useStt";
+import { MicModal } from "./MicModal";
+import LoadingModal from "./LoadingModal";
 
 interface Props {
   onSubmit: (content: string) => void;
 }
 
 export const InputBox: FC<Props> = ({ onSubmit }) => {
-  const { init, processAudio } = useStt(onSubmit);
+  const [processing, setProcessing] = useState(false);
+
+  const onAudioProcessComplete = (text:string)=>{
+    onSubmit(text)
+    setProcessing(false)
+
+
+  }
+  const { init, processAudio } = useStt(onAudioProcessComplete);
   useEffect(() => {
     init();
   }, []);
+  const [canceled, setCanceled] = useState(false);
+
   const onRecordStop = async (audioUrl: string) => {
-    processAudio(audioUrl);
+    if (!canceled) {
+      processAudio(audioUrl);
+      setProcessing(true)
+    }
   };
   const inputRef = useRef<HTMLInputElement>(null);
-  const [recording, startRecord, stopRecord] = useRecorder(onRecordStop);
+  const [, startRecord, stopRecord] = useRecorder(onRecordStop);
   const submitInput = () => {
     const current = inputRef.current;
     if (current) {
@@ -23,6 +38,8 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
       current.value = "";
     }
   };
+
+  const [showMicPopup, setShowMicPopup] = useState(false);
 
   return (
     <div className=" flex flex-grow-0 items-center border-b border-gray-300 py-2">
@@ -39,7 +56,10 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
       />
       <button
         className="ml-2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-        onClick={recording ? stopRecord : startRecord}
+        onClick={() => {
+          setShowMicPopup(true);
+          startRecord();
+        }}
       >
         mic
       </button>
@@ -49,6 +69,21 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
       >
         submit
       </button>
+      <MicModal
+      content="Listening...please press button to complete"
+      confirm="Complete"
+        show={showMicPopup}
+        onClose={() => setShowMicPopup(false)}
+        onConfirm={() => {
+          setCanceled(false);
+          stopRecord();
+        }}
+        onCancel={() => {
+          setCanceled(true);
+          stopRecord();
+        }}
+      />
+      <LoadingModal show={processing} text="Processing STT..."/>
     </div>
   );
 };
