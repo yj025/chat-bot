@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { Chat, Chats, ChatSource } from "./Chats";
-import style from "./ChatPage.module.css";
 import dynamic from "next/dynamic";
 
 const DynamicChatInput = dynamic(
   () => import("./InputBox").then((module) => module.InputBox),
   {
     loading: () => <p>Loading...</p>,
+    ssr:false
   }
 );
 

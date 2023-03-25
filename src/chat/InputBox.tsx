@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useRecorder } from "./useRecorder";
-import { useStt } from "../stt/useStt";
+import { init, processAudio } from "../stt/Stt";
 import { MicModal } from "./MicModal";
 import LoadingModal from "./LoadingModal";
 
@@ -11,22 +11,22 @@ interface Props {
 export const InputBox: FC<Props> = ({ onSubmit }) => {
   const [processing, setProcessing] = useState(false);
 
-  const onAudioProcessComplete = (text:string)=>{
-    onSubmit(text)
-    setProcessing(false)
-
-
-  }
-  const { init, processAudio } = useStt(onAudioProcessComplete);
   useEffect(() => {
     init();
   }, []);
+
   const [canceled, setCanceled] = useState(false);
 
   const onRecordStop = async (audioUrl: string) => {
     if (!canceled) {
-      processAudio(audioUrl);
-      setProcessing(true)
+      setProcessing(true);
+      // const { processAudio } = await import("../stt/Stt");
+      const result = await processAudio(audioUrl);
+      const input = inputRef.current;
+      if (input) {
+        input.value = result;
+      }
+      setProcessing(false);
     }
   };
   const inputRef = useRef<HTMLInputElement>(null);
@@ -70,8 +70,8 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
         submit
       </button>
       <MicModal
-      content="Listening...please press button to complete"
-      confirm="Complete"
+        content="Listening...please press button to complete"
+        confirm="Complete"
         show={showMicPopup}
         onClose={() => setShowMicPopup(false)}
         onConfirm={() => {
@@ -83,7 +83,7 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
           stopRecord();
         }}
       />
-      <LoadingModal show={processing} text="Processing STT..."/>
+      <LoadingModal show={processing} text="Processing STT..." />
     </div>
   );
 };

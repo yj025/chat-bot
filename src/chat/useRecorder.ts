@@ -21,7 +21,7 @@ export const useRecorder = (onSuccess: (result: string) => void) => {
 
         mediaRecorder.onstop = () => {
           console.log('onStop')
-          const audioData = new Blob(chunks, { type: 'audio/mp3;' })
+          const audioData = new Blob(chunks, { type: 'audio/wav;' })
           console.log(audioData)
           const audioSrc = window.URL.createObjectURL(audioData)
           onSuccess(audioSrc)
