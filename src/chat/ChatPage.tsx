@@ -6,7 +6,7 @@ const DynamicChatInput = dynamic(
   () => import("./InputBox").then((module) => module.InputBox),
   {
     loading: () => <p>Loading...</p>,
-    ssr:false
+    ssr: false,
   }
 );
 

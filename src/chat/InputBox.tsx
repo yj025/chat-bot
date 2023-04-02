@@ -1,8 +1,10 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { useRecorder } from "./useRecorder";
-import { init, processAudio } from "../stt/Stt";
+import { init, loadModel, processAudio } from "../whisper/Stt";
 import { MicModal } from "./MicModal";
 import LoadingModal from "./LoadingModal";
+import { useDbTtsModel } from "../whisper/useDbTtsModel";
+import { DownloadSttModal } from "../whisper/DownloadSttModal";
 
 interface Props {
   onSubmit: (content: string) => void;
@@ -24,7 +26,7 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
       const result = await processAudio(audioUrl);
       const input = inputRef.current;
       if (input) {
-        input.value = result;
+        input.value = input.value + " " + result;
       }
       setProcessing(false);
     }
@@ -41,6 +43,36 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
 
   const [showMicPopup, setShowMicPopup] = useState(false);
 
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const { getModel } = useDbTtsModel();
+
+  const [saved, setSaved] = useState(true);
+  useEffect(() => {
+    getModel().then((model) => setSaved(model !== undefined));
+  }, []);
+
+  const onMicClick = () => {
+    if (!saved) {
+      setShowDownloadModal(true);
+    } else {
+      loadSttModelAndLanuchMic()
+    }
+  };
+
+  const onDownloadModelSuccess = () => {
+    setSaved(true);
+    loadSttModelAndLanuchMic();
+  };
+
+  const loadSttModelAndLanuchMic = () => {
+    return getModel()
+    .then((model) => loadModel(model))
+    .then(_=>{
+      setShowMicPopup(true);
+      startRecord();
+    });
+  };
+
   return (
     <div className=" flex flex-grow-0 items-center border-b border-gray-300 py-2">
       <input
@@ -56,10 +88,7 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
       />
       <button
         className="ml-2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-        onClick={() => {
-          setShowMicPopup(true);
-          startRecord();
-        }}
+        onClick={onMicClick}
       >
         mic
       </button>
@@ -84,6 +113,11 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
         }}
       />
       <LoadingModal show={processing} text="Processing STT..." />
+      <DownloadSttModal
+        show={showDownloadModal}
+        onClose={() => setShowDownloadModal(false)}
+        onSuccess={onDownloadModelSuccess}
+      />
     </div>
   );
 };
