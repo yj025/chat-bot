@@ -24,7 +24,7 @@ export const DownloadSttModal = ({ show, onClose, onSuccess }: Props) => {
     );
     if (blob) {
       await saveModel(blob);
-    }
+    } 
     onClose();
     onSuccess();
     setDownloading(false);
@@ -32,14 +32,27 @@ export const DownloadSttModal = ({ show, onClose, onSuccess }: Props) => {
 
   return (
     <Modal show={show} size="lg" onClose={onClose}>
-      <Modal.Header>Download Whisper model</Modal.Header>
+      <Modal.Header>Whisper Model</Modal.Header>
       <Modal.Body>
-        <div className="flex items-center justify-between">
-          <span>ggml-tiny.en.bin</span>
+        <p className=" text-lg leading-relaxed text-gray-700 dark:text-gray-400">
+          Need to download the whisper model to recognize the speech.
+        </p>
+        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400 mt-2">
+          There are five model sizes(tiny,base,small,medium,large), four with
+          English-only versions, offering speed and accuracy tradeoffs. Choose
+          download tiny for speed concern.
+        </p>
+        <div className="mt-6 flex items-center justify-between">
+          <span className=" text-base text-gray-700">ggml-tiny.en.bin</span>
           <Button onClick={download}>Download</Button>
         </div>
         {downloading && (
-          <Progress className="mt-4" progress={progress}></Progress>
+          <Progress
+            className="mt-4"
+            progress={progress}
+            labelProgress={true}
+            size="lg"
+          ></Progress>
         )}
       </Modal.Body>
     </Modal>

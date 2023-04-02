@@ -90,16 +90,16 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
         className="ml-2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
         onClick={onMicClick}
       >
-        mic
-      </button>
+        Speak
+      </button> 
       <button
         className="ml-2 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
         onClick={submitInput}
       >
-        submit
+        Submit
       </button>
       <MicModal
-        content="Listening...please press button to complete"
+        content="Listening...please press complete button to convert speech to text"
         confirm="Complete"
         show={showMicPopup}
         onClose={() => setShowMicPopup(false)}
@@ -112,7 +112,7 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
           stopRecord();
         }}
       />
-      <LoadingModal show={processing} text="Processing STT..." />
+      <LoadingModal show={processing} text="Processing speech-to-text..." />
       <DownloadSttModal
         show={showDownloadModal}
         onClose={() => setShowDownloadModal(false)}
