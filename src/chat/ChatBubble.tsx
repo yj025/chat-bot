@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Chat, ChatSource } from "./Chats";
+import { Chat, ChatSource } from "./ChatModel";
 
 interface Props {
   chat: Chat;

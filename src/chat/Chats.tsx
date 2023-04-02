@@ -1,19 +1,11 @@
 import { FC, useEffect, useRef } from "react";
 import { ChatBubble } from "./ChatBubble";
+import { Chat } from "./ChatModel";
 
 interface Props {
   chats: Chat[];
 }
 
-export interface Chat {
-  message: string;
-  from: ChatSource;
-}
-
-export enum ChatSource {
-  SENDER,
-  SERVER,
-}
 
 export const Chats: FC<Props> = ({ chats }) => {
   const scrollRef = useRef<HTMLDivElement>(null);

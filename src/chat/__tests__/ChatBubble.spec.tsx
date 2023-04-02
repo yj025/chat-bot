@@ -1,6 +1,6 @@
 import {render, screen} from "@testing-library/react";
 import {ChatBubble} from "../ChatBubble";
-import {ChatSource} from "../Chats";
+import {ChatSource} from "../ChatModel";
 
 describe('test Bubble', function () {
     it('should render Bubble', function () {
