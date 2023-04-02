@@ -99,7 +99,6 @@ export const InputBox: FC<Props> = ({ onSubmit }) => {
         Submit
       </button>
       <MicModal
-        content="Listening...please press complete button to convert speech to text"
         confirm="Complete"
         show={showMicPopup}
         onClose={() => setShowMicPopup(false)}

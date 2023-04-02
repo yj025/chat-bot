@@ -3,7 +3,6 @@ import React from "react";
 
 interface Props {
   show: boolean;
-  content: string;
   confirm: string;
   onClose: () => void;
   onConfirm: () => void;
@@ -11,7 +10,7 @@ interface Props {
 }
 
 export const MicModal = (props: Props) => {
-  const { show, onClose, onConfirm, onCancel, content, confirm } = props;
+  const { show, onClose, onConfirm, onCancel, confirm } = props;
   return (
     <Modal
       show={show}
@@ -24,10 +23,9 @@ export const MicModal = (props: Props) => {
         onClose();
       }}
     >
-      <Modal.Header />
+      <Modal.Header/>
       <Modal.Body>
-        <div className="text-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div>
               <span className="relative flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
@@ -35,10 +33,13 @@ export const MicModal = (props: Props) => {
               </span>
             </div>
 
-            <h3 className="text-lg font-normal text-gray-500 dark:text-gray-400">
-              {content}
+            <h3 className="text-lg font-normal text-gray-600 dark:text-gray-400">
+              Listening...
             </h3>
           </div>
+          <p className=" textbase leading-tight text-gray-400 mt-2">
+          Please press complete button to convert speech to text
+          </p>
           <div className="flex justify-center gap-4 mt-5">
             <Button
               onClick={() => {
@@ -48,7 +49,6 @@ export const MicModal = (props: Props) => {
             >
               {confirm}
             </Button>
-          </div>
         </div>
       </Modal.Body>
     </Modal>
