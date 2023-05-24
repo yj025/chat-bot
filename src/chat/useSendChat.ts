@@ -49,12 +49,13 @@ export const useSendChat = () => {
       })
       .then((result) => {
         setConversation({
-          conversationId: result.result.conversationId,
-          messageId: result.result.messageId,
+          conversationId: result.conversationId,
+          messageId: result.messageId,
         });
         return Promise.resolve({
+          id: result.id,
           from: ChatSource.SERVER,
-          message: result.result.text,
+          message: result.text,
         });
       })
       .catch((err) => {
@@ -85,7 +86,7 @@ export const useSendChat = () => {
         }
       })
       .then((result) => {
-        setToken(result.result.token);
+        setToken(result.token);
         return Promise.resolve({
           from: ChatSource.SERVER,
           message: "Success! Chat with me!",

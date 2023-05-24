@@ -4,9 +4,18 @@ import { Chat } from "./ChatModel";
 
 export const useChatList = (initList:Chat[]) => {
   const [chats, setChats] = useState<Chat[]>(initList);
+
+  const initChat = (initList:Chat[]) =>{
+    setChats(initList)
+  }
   const addChat = (chat: Chat) => {
     setChats((prevState) => [...prevState, chat]);
   };
 
-  return { chats, addChat };
+  const markChat = (id:string)=>{
+    // chats.find()
+    console.log("like id=",id)
+  }
+
+  return { chats, addChat, markChat, initChat };
 };

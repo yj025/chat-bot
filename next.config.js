@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const CopyPlugin = require("copy-webpack-plugin");
+// const rewritesConfig = [
+//       {
+//         source: "/cats",
+//         destination: process.env.BACKEND_PROXY_API,
+//       },
+//     ];
+
 
 const nextConfig = {
   reactStrictMode: true,
@@ -22,6 +29,7 @@ const nextConfig = {
     ];  
     return config;
   },
+  // rewrites: async () => rewritesConfig,
   async headers() {
     return [
       {
