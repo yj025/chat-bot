@@ -4,9 +4,6 @@ import { markChat } from "../../backend-proxy/api";
 type Data = [
   {
     id: string;
-    text: string;
-    parentMessageId?: string;
-    conversationId?: string;
   }
 ];
 

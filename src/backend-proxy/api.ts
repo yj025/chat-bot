@@ -17,10 +17,16 @@ export const markChat = (id: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ markStatus: true }),
-      method: "POST",
+      body: "true" ,
+      method: "PATCH",
     }
-  ).then((it) => it.json());
+  ).then(it=>{
+    if(it.status === 200){
+      return Promise.resolve({id:id})
+    } else {
+      return it.json()
+    }
+  });
 };
 
 export const fetchHistory = () => {

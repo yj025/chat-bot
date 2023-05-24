@@ -39,7 +39,10 @@ export const ChatPage: FC = () => {
     fetchHistory()
       .then((chats: Chat[]) => {
         setLoading(false);
-        initChat(chats);
+        initChat([
+          { from: ChatSource.SERVER, message: "Hi, chat to chat bot" },
+          ...chats,
+        ]);
       })
       .catch((e) => {
         console.log(e);

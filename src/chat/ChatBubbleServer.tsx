@@ -32,6 +32,13 @@ export const ChatBubbleServer: FC<Props> = ({ chat, mark }) => {
       >
         <p className={"m-1 self-start rounded-md bg-orange-100 p-2"}>
           {chat.message}
+          {chat?.like && <Image
+              priority
+              src="/like.svg"
+              height={32}
+              width={32}
+              alt="Like it"
+            />}
         </p>
       </Tooltip>
     </>
