@@ -17,7 +17,7 @@ export const likeChat = (id: string, like: boolean) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: `${like}`,
+      body: JSON.stringify({ markStatus: like }),
       method: "PATCH",
     }
   ).then((it) => {
