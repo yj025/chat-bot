@@ -9,38 +9,44 @@ interface Props {
 }
 
 export const ChatBubbleServer: FC<Props> = ({ chat, likeChat }) => {
+  const like = !!chat.like;
   return (
     <>
       <Tooltip
         content={
-          <div>
+          <div
+            className="flex items-center justify-center gap-2"
+            onClick={() => likeChat(chat.id ?? "", !like)}
+          >
             <Image
               priority
-              src="/like.svg"
+              src={like ? "/dislike.png" : "/like.png"}
               height={32}
               width={32}
-              alt="Like it"
-              onClick={() => likeChat(chat.id ?? "", !chat.like)}
+              alt={like ? "Like it" : "Unlike it"}
             />
+            <span>{like ? "Unlike it!" : "Like it!"}</span>
           </div>
         }
-        placement="bottom"
+        placement="bottom-start"
         style="light"
         theme={{
           target: "w-fit self-start",
         }}
       >
-        <p className={"m-1 self-start rounded-md bg-orange-100 p-2"}>
-          {chat.message}
-          {chat?.like && (
-            <Image
-              priority
-              src="/like.svg"
-              height={32}
-              width={32}
-              alt="Like it"
-            />
-          )}
+        <p className="m-1 self-start rounded-md bg-orange-100 p-2">
+          <span>
+            {chat.message}
+            {chat?.like && (
+              <Image
+                priority
+                src="/like.svg"
+                height={24}
+                width={24}
+                alt="Like it"
+              />
+            )}
+          </span>
         </p>
       </Tooltip>
     </>

@@ -18,7 +18,14 @@ export const ChatPage: FC = () => {
   // const { chats, addChat, markChat, initChat } = useChatList([
   //   { from: ChatSource.SERVER, message: "Hello, pls input the passport" },
   // ]);
-  const { chats, addChat, likeChat, initChat } = useChatList([]);
+  const { chats, addChat, likeChat, initChat } = useChatList([
+    // {
+    //   from: ChatSource.SERVER,
+    //   message:
+    //     "Hello, pls input the passport Hello, pls input the passportHello, pls input the passportHello, pls input the passportHello, pls input the passportHello, pls input the passport Hello, pls input the passportHello, pls input the passportHello, pls input the passport",
+    //   id: "welcome",
+    // },
+  ]);
   const { chat, like, fetchHistory } = useBackendProxy();
 
   // const { sendChat } = useSendChat();
@@ -40,7 +47,11 @@ export const ChatPage: FC = () => {
       .then((chats: Chat[]) => {
         setLoading(false);
         initChat([
-          { from: ChatSource.SERVER, message: "Hi, chat to chat bot" },
+          {
+            from: ChatSource.SERVER,
+            message: "Hi, chat to chat bot",
+            id: "welcome",
+          },
           ...chats,
         ]);
       })

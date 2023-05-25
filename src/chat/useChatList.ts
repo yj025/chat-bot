@@ -12,8 +12,14 @@ export const useChatList = (initList: Chat[]) => {
   };
 
   const likeChat = (id: string, like: boolean) => {
-    const find = chats?.find((it) => it.id === id) as Chat;
-    Object.assign(find, { ...find, like: like });
+    setChats((prevState) => {
+      return prevState.map((item) => {
+        if (item.id === id) {
+          return { ...item, like: like };
+        }
+        return item;
+      });
+    });
   };
 
   return { chats, addChat, likeChat, initChat };
