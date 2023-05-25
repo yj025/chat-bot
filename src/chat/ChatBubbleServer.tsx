@@ -13,6 +13,7 @@ export const ChatBubbleServer: FC<Props> = ({ chat, likeChat }) => {
   return (
     <>
       <Tooltip
+        trigger="click"
         content={
           <div
             className="flex items-center justify-center gap-2"
@@ -21,8 +22,8 @@ export const ChatBubbleServer: FC<Props> = ({ chat, likeChat }) => {
             <Image
               priority
               src={like ? "/dislike.png" : "/like.png"}
-              height={32}
-              width={32}
+              height={24}
+              width={24}
               alt={like ? "Like it" : "Unlike it"}
             />
             <span>{like ? "Unlike it!" : "Like it!"}</span>
@@ -40,7 +41,7 @@ export const ChatBubbleServer: FC<Props> = ({ chat, likeChat }) => {
             {chat?.like && (
               <Image
                 priority
-                src="/like.svg"
+                src="/like.png"
                 height={24}
                 width={24}
                 alt="Like it"
