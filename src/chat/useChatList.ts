@@ -11,10 +11,10 @@ export const useChatList = (initList: Chat[]) => {
     setChats((prevState) => [...prevState, chat]);
   };
 
-  const markChat = (id: string) => {
+  const likeChat = (id: string, like: boolean) => {
     const find = chats?.find((it) => it.id === id) as Chat;
-    Object.assign(find, { ...find, like: true });
+    Object.assign(find, { ...find, like: like });
   };
 
-  return { chats, addChat, markChat, initChat };
+  return { chats, addChat, likeChat, initChat };
 };

@@ -10,21 +10,21 @@ export const sendToBeProxy = (chatRequest: ChatRequest) => {
   }).then((it) => it.json());
 };
 
-export const markChat = (id: string) => {
+export const likeChat = (id: string, like: boolean) => {
   return fetch(
     `${process.env.BACKEND_PROXY_API}/v1/conversation/messages/${id}/change`,
     {
       headers: {
         "Content-Type": "application/json",
       },
-      body: "true" ,
+      body: `${like}`,
       method: "PATCH",
     }
-  ).then(it=>{
-    if(it.status === 200){
-      return Promise.resolve({id:id})
+  ).then((it) => {
+    if (it.status === 200) {
+      return Promise.resolve({ id: id });
     } else {
-      return it.json()
+      return it.json();
     }
   });
 };

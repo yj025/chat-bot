@@ -5,10 +5,10 @@ import Image from "next/image";
 
 interface Props {
   chat: Chat;
-  mark: (id: string) => void;
+  likeChat: (id: string, like: boolean) => void;
 }
 
-export const ChatBubbleServer: FC<Props> = ({ chat, mark }) => {
+export const ChatBubbleServer: FC<Props> = ({ chat, likeChat }) => {
   return (
     <>
       <Tooltip
@@ -20,7 +20,7 @@ export const ChatBubbleServer: FC<Props> = ({ chat, mark }) => {
               height={32}
               width={32}
               alt="Like it"
-              onClick={() => mark(chat.id ?? "")}
+              onClick={() => likeChat(chat.id ?? "", !chat.like)}
             />
           </div>
         }
@@ -32,13 +32,15 @@ export const ChatBubbleServer: FC<Props> = ({ chat, mark }) => {
       >
         <p className={"m-1 self-start rounded-md bg-orange-100 p-2"}>
           {chat.message}
-          {chat?.like && <Image
+          {chat?.like && (
+            <Image
               priority
               src="/like.svg"
               height={32}
               width={32}
               alt="Like it"
-            />}
+            />
+          )}
         </p>
       </Tooltip>
     </>

@@ -24,7 +24,7 @@ export const useBackendProxy = () => {
       });
   };
 
-  const like = (id: string) => {
+  const like = (id: string, like: boolean) => {
     return fetch("/api/like", {
       method: "POST",
       headers: {
@@ -33,6 +33,7 @@ export const useBackendProxy = () => {
       },
       body: JSON.stringify({
         id: id,
+        like: like,
       }),
     }).then((response) => {
       return response.json();

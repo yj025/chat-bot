@@ -4,12 +4,10 @@ import { Chat } from "./ChatModel";
 
 interface Props {
   chats: Chat[];
-  mark: (id:string)=>void;
-
+  likeChat: (id: string, like: boolean) => void;
 }
 
-
-export const Chats: FC<Props> = ({ chats ,mark }) => {
+export const Chats: FC<Props> = ({ chats, likeChat }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (scrollRef?.current) {
@@ -23,7 +21,7 @@ export const Chats: FC<Props> = ({ chats ,mark }) => {
         className="flex max-h-full flex-col overflow-auto  whitespace-pre-wrap text-lg"
       >
         {chats.map((chat, index) => (
-          <ChatBubble key={index} chat={chat} mark={mark}/>
+          <ChatBubble key={index} chat={chat} likeChat={likeChat} />
         ))}
       </div>
     </div>

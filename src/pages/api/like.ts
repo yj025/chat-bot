@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { markChat } from "../../backend-proxy/api";
+import { likeChat } from "../../backend-proxy/api";
 
 type Data = [
   {
@@ -11,7 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const result = await markChat(req.body.id);
+  const result = await likeChat(req.body.id, req.body.like);
   console.log("like result", result);
   res.status(200).send(result);
 }

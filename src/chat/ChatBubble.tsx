@@ -5,14 +5,14 @@ import { ChatBubbleUser } from "./ChatBubbleUser";
 
 interface Props {
   chat: Chat;
-  mark: (id:string)=>void;
+  likeChat: (id: string, like: boolean) => void;
 }
 
-export const ChatBubble: FC<Props> = ({ chat, mark }) => {
+export const ChatBubble: FC<Props> = ({ chat, likeChat }) => {
   const isSender = chat.from === ChatSource.SENDER;
   return isSender ? (
     <ChatBubbleUser content={chat.message} />
   ) : (
-    <ChatBubbleServer chat={chat} mark={mark} />
+    <ChatBubbleServer chat={chat} likeChat={likeChat} />
   );
 };

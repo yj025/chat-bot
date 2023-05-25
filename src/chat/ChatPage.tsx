@@ -18,7 +18,7 @@ export const ChatPage: FC = () => {
   // const { chats, addChat, markChat, initChat } = useChatList([
   //   { from: ChatSource.SERVER, message: "Hello, pls input the passport" },
   // ]);
-  const { chats, addChat, markChat, initChat } = useChatList([]);
+  const { chats, addChat, likeChat, initChat } = useChatList([]);
   const { chat, like, fetchHistory } = useBackendProxy();
 
   // const { sendChat } = useSendChat();
@@ -31,8 +31,8 @@ export const ChatPage: FC = () => {
   };
   const [loading, setLoading] = useState(true);
 
-  const likeChat = (id: string) => {
-    like(id).then(() => markChat(id));
+  const likeChatOnClick = (id: string, liked: boolean) => {
+    like(id, liked).then(() => likeChat(id, liked));
   };
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export const ChatPage: FC = () => {
         </div>
       )}
 
-      <Chats chats={chats} mark={likeChat} />
+      <Chats chats={chats} likeChat={likeChatOnClick} />
       <DynamicChatInput onSubmit={onSubmit} />
     </div>
   );
