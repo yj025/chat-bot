@@ -12,7 +12,7 @@ export const sendToBeProxy = (chatRequest: ChatRequest) => {
 
 export const likeChat = (id: string, like: boolean) => {
   return fetch(
-    `${process.env.BACKEND_PROXY_API}/v1/conversation/messages/${id}/change`,
+    `${process.env.BACKEND_PROXY_API}/v1/conversation/messages/${id}`,
     {
       headers: {
         "Content-Type": "application/json",
